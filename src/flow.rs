@@ -92,9 +92,6 @@ pub struct Flow {
 
 impl Hash for Flow {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        info!("\t\tsource ip: {}", self.source.ip);
-        info!("\t\tsource ip: {}", self.destination.ip);
-        info!("\t\tvlan: {}", self.vlan);
         self.source.ip.hash(state);
         self.destination.ip.hash(state);
         self.vlan.hash(state);
