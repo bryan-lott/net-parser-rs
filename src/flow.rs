@@ -8,6 +8,7 @@ use crate::{
 };
 
 use std::{self, convert::TryFrom};
+use std::hash::{Hash, Hasher};
 
 ///
 /// Representation of a device on the network, with the mac, ip, and port involved in a connection
@@ -82,22 +83,20 @@ pub trait FlowExtraction {
 ///
 /// Flow that was built from a record moved
 ///
-#[derive(Debug, Hash)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Flow {
     source: Device,
     destination: Device,
     vlan: Vlan,
 }
 
-impl PartialEq for Flow {
-    fn eq(&self, other: &Flow) -> bool {
-        self.source.ip == other.source.ip &&
-        self.destination.ip == other.destination.ip &&
-        self.vlan == other.vlan
+impl Hash for Flow {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.source.ip.hash(state);
+        self.destination.ip.hash(state);
+        self.vlan.hash(state);
     }
 }
-
-impl Eq for Flow {}
 
 impl Flow {
     pub fn source(&self) -> &Device {
