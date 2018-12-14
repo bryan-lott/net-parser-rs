@@ -101,9 +101,14 @@ impl Hash for Flow {
 impl PartialEq for Flow {
     fn eq(&self, other: &Flow) -> bool {
         let zero_v4 = std::net::IpAddr::V4(std::net::Ipv4Addr::new(0, 0, 0, 0));
-        (self.source.ip == zero_v4 || other.source.ip == zero_v4 || self.source.ip == other.source.ip) &&
-        (self.destination.ip == other.destination.ip) &&
-        self.vlan == other.vlan
+        info!("\t\tsource ip: {} == {}", self.source.ip, other.source.ip);
+        info!("\t\tsource ip: {} == {}", self.destination.ip, other.destination.ip);
+        info!("\t\tvlan: {} == {}", self.vlan, other.vlan);
+        (self.source.ip == zero_v4 
+            || other.source.ip == zero_v4 
+            || self.source.ip == other.source.ip) 
+        && (self.destination.ip == other.destination.ip) 
+        && self.vlan == other.vlan
     }
 }
 
