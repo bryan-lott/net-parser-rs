@@ -12,7 +12,7 @@ use std::{self, convert::TryFrom};
 ///
 /// Representation of a device on the network, with the mac, ip, and port involved in a connection
 ///
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Hash)]
 pub struct Device {
     mac: MacAddress,
     ip: std::net::IpAddr,
@@ -82,7 +82,7 @@ pub trait FlowExtraction {
 ///
 /// Flow that was built from a record moved
 ///
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Hash)]
 pub struct Flow {
     source: Device,
     destination: Device,
