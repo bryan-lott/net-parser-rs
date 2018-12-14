@@ -102,7 +102,7 @@ impl PartialEq for Flow {
     fn eq(&self, other: &Flow) -> bool {
         let zero_v4 = std::net::IpAddr::V4(std::net::Ipv4Addr::new(0, 0, 0, 0));
         (self.source.ip == other.source.ip || self.source.ip == zero_v4 || other.source.ip == zero_v4) &&
-        (self.destination.ip == other.destination.ip || self.destination.ip == zero_v4 || other.destination.ip == zero_v4) &&
+        (self.destination.ip == other.destination.ip) &&
         self.vlan == other.vlan
     }
 }
