@@ -82,12 +82,22 @@ pub trait FlowExtraction {
 ///
 /// Flow that was built from a record moved
 ///
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, Hash)]
 pub struct Flow {
     source: Device,
     destination: Device,
     vlan: Vlan,
 }
+
+impl PartialEq for Flow {
+    fn eq(&self, other: &Flow) -> bool {
+        self.source.ip == other.source.ip &&
+        self.destination.ip == other.destination.ip &&
+        self.vlan == other.vlan
+    }
+}
+
+impl Eq for Flow {}
 
 impl Flow {
     pub fn source(&self) -> &Device {
