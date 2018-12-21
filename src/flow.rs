@@ -83,7 +83,7 @@ pub trait FlowExtraction {
 ///
 /// Flow that was built from a record moved
 ///
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct Flow {
     source: Device,
     destination: Device,
@@ -97,22 +97,6 @@ impl Hash for Flow {
         self.vlan.hash(state);
     }
 }
-
-impl PartialEq for Flow {
-    fn eq(&self, other: &Flow) -> bool {
-        let zero_v4 = std::net::IpAddr::V4(std::net::Ipv4Addr::new(0, 0, 0, 0));
-        info!("\t\tsource ip: {}:{} == {}:{}", self.source.ip, self.source.port, other.source.ip, other.source.port);
-        info!("\t\tdestination ip: {}:{} == {}:{}", self.destination.ip, self.destination.port, other.destination.ip, other.destination.port);
-        info!("\t\tvlan: {} == {}", self.vlan, other.vlan);
-        (self.source.ip == zero_v4 
-            || other.source.ip == zero_v4 
-            || self.source.ip == other.source.ip) 
-        && (self.destination.ip == other.destination.ip) 
-        && self.vlan == other.vlan
-    }
-}
-
-impl Eq for Flow {}
 
 impl Flow {
     pub fn source(&self) -> &Device {
